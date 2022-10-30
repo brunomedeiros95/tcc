@@ -1,3 +1,9 @@
+#-------------------------------------------------------
+# Programa: Umidade do Solo 0% a 100%
+# Esse código tem como objetivo testar o funcionamento 
+# e a conversão dos dados de umidade do solo.
+#-------------------------------------------------------
+
 import board
 import busio
 
@@ -18,6 +24,6 @@ while True:
     #Formula para converter os valores analógicos de 0 a 100
     porcentagem = (((canal0.value - 26361)/14870) *100 *-1)
     
-    #Formatação para imprimir a humidade de 0% a 100%
     resultado =("{}%".format(int(porcentagem)))
     print(resultado)
+    

@@ -1,3 +1,9 @@
+#-------------------------------------------------------
+# Programa: Conversor ADS1115
+# Esse código tem como objetivo testar o funcionamento 
+# do conversor ADS115 forma isolada.
+#-------------------------------------------------------
+
 import board
 import busio
 
@@ -14,6 +20,5 @@ ads = ADS.ADS1115(i2c)
 #Define a leitura da porta analogica 0 do módulo
 canal0 = AnalogIn(ads, ADS.P0)
 
-#Loop que realiza a leitura da porta analogica
 while True:
     print(canal0.value)
