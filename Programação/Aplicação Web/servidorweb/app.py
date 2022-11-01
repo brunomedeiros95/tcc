@@ -33,18 +33,14 @@ app = Flask(__name__)
 @app.route('/') 
 def index():
     
-    umidade = (((canal0.value - 26490)/15490) *100 *-1)
-    umidadeForm =("{}%".format(int(umidade)))
-    
     gpio.setup(rele, 1)
     
-    return render_template('web.html', umidade=umidade, umidadeForm=umidadeForm)
+    return render_template('index.html')
 #-------------------------------------------------------
-@app.route("/Inteligente")
+@app.route("/inteligente")
 def inteligente():
     
-    umidade = (((canal0.value - 26490)/15490) *100 *-1) 
-    umidadeForm =("{}%".format(int(umidade)))
+    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
    
     if (umidade <= 50): 
         gpio.setup(rele, 0)        
@@ -57,36 +53,33 @@ def inteligente():
     else:
         print("Monitorando...")  
        
-    return render_template('web_inteligente.html', umidade=umidade, umidadeForm=umidadeForm)
+    return render_template('inteligente.html', umidade=umidade)
 #-------------------------------------------------------
-@app.route('/Manual')
+@app.route('/manual')
 def manual():
     
-    umidade = (((canal0.value - 26490)/15490) *100 *-1) 
-    umidadeForm =("{}%".format(int(umidade)))
-    
-    return render_template('web_manual.html', umidade=umidade, umidadeForm=umidadeForm)
+    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
+       
+    return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
-@app.route('/Manual/Ligar')
+@app.route('/manual/ligar')
 def ligarbomba():
     
-    umidade = (((canal0.value - 26490)/15490) *100 *-1) 
-    umidadeForm =("{}%".format(int(umidade)))
+    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
     gpio.setup(rele,0)
     
-    return render_template('web_manual.html', umidade=umidade, umidadeForm=umidadeForm)
+    return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
-@app.route('/Manual/Parar')
+@app.route('/manual/parar')
 def desligarbomba():
     
-    gpio.setup(rele,1)
-    umidade = (((canal0.value - 26490)/15490) *100 *-1) 
-    umidadeForm =("{}%".format(int(umidade)))
+    umidade = (int(((canal0.value - 26490)/15490) *100 *-1))
+    gpio.setup(rele,1) 
     
-    return render_template('web_manual.html', umidade=umidade, umidadeForm=umidadeForm)
+    return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 if __name__=="__main__":
 
-    app.run(debug=True, host='192.168.0.104')
+    app.run(debug=True, host='192.168.0.106')
 #-------------------------------------------------------
 

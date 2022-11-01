@@ -1,0 +1,34 @@
+{% extends "template.html" %} {% block content %}
+<section class="manual">
+  <div class="container">
+    <h1 class="mode--title">Irrigação Manual</h1>
+    <p class="mode--sub">
+      Para o cultivo de tomates a umidade do solo deve estar sempre entre
+      <b>50%</b> e <b>80%</b>
+    </p>
+
+    <div class="btns--holder">
+      <a class="btn btn-primary" role="button" href="/manual/ligar"> LIGAR </a>
+      <a class="btn btn-primary" role="button" href="/manual/parar"> PARAR </a>
+    </div>
+
+    <div class="status--holder">
+      <p>Umidade do solo:</p>
+      <div
+        class="progress--bar chart"
+        id="graph"
+        data-percent="{{umidade}}"
+      ></div>
+    </div>
+
+    <a class="btn btn-primary back" role="button" href="/"> Voltar </a>
+  </div>
+</section>
+
+<script>
+  function timedRefresh(timeoutPeriod) {
+    setTimeout("location.reload(true);", timeoutPeriod);
+  }
+  window.onload = timedRefresh(2000);
+</script>
+{% endblock %}

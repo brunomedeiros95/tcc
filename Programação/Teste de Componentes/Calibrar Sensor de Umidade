@@ -1,7 +1,7 @@
 #-------------------------------------------------------
-# Programa: Umidade do Solo 0% a 100%
-# Esse código tem como objetivo testar o funcionamento 
-# e a conversão dos dados de umidade do solo.
+# Programa: Calibrar Sensor de Umidade
+# Esse código tem como objetivo calibrar de forma automática
+# o sensor de umidade
 #-------------------------------------------------------
 
 import board
@@ -52,11 +52,13 @@ time.sleep (2)
 print ("Valor 2 definido com sucesso","\n","\n")
 time.sleep (2)
 print ("SENSOR DE UMIDADE CALIBRADO COM SUCESSO","\n")
+
 #-------------------------------------------------------
   
 while True:
     #Formula para converter os valores analógicos de 0 a 100
     porcentagem = (((canal0.value - seco)/(seco - molhado)) *100 *-1)
+   
     if porcentagem <=(0):
         print("0%")
         time.sleep (1)
