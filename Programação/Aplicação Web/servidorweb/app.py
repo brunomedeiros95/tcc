@@ -7,8 +7,6 @@
 #           Rodrigo Sanches de Oliveira
 #-------------------------------------------------------
 
-# Projeto Irrigação Inteligente
-
 import RPi.GPIO as gpio
 import time             
 import busio
@@ -19,7 +17,7 @@ from adafruit_ads1x15.analog_in import AnalogIn
 
 
 rele = 16
-gpio.setup(rele, gpio.OUT, initial= 4)
+gpio.setup(rele, gpio.OUT, initial= 1)
 
 #Inicializa interface I2C / Configura ADS1115
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -49,6 +47,12 @@ def inteligente():
     elif (umidade >= 80):
         gpio.setup(rele, 1)
         print("Irrigação Desligada") 
+    
+    elif (umidade < 0):
+        umidade = 0
+    
+    elif (umidade > 100):
+        umidade = 100
     
     else:
         print("Monitorando...")  
