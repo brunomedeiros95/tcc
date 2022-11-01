@@ -15,6 +15,7 @@ from flask import Flask, render_template
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
+app = Flask(__name__)
 
 rele = 16
 gpio.setup(rele, gpio.OUT, initial= 1)
@@ -26,7 +27,6 @@ canal0 = AnalogIn(ads, ADS.P0)
 
 gpio.setwarnings(False)
 
-app = Flask(__name__)
 #-------------------------------------------------------
 @app.route('/') 
 def index():
@@ -38,24 +38,24 @@ def index():
 @app.route("/inteligente")
 def inteligente():
     
-    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
+    umidade = (int(((canal0.value - 23209)/11481) *100 *-1)) 
    
-    if (umidade <= 50): 
+    if (umidade <= 50) and (umidade >= 0): 
         gpio.setup(rele, 0)        
-        print("Irrigando")
-       
-    elif (umidade >= 80):
-        gpio.setup(rele, 1)
-        print("Irrigação Desligada") 
     
     elif (umidade < 0):
+        gpio.setup(rele, 0) 
         umidade = 0
+       
+    elif (umidade >= 80) and (umidade <= 100):
+        gpio.setup(rele, 1)
     
     elif (umidade > 100):
+        gpio.setup(rele, 1)
         umidade = 100
     
     else:
-        print("Monitorando...")  
+        print("Calculando...")  
        
     return render_template('inteligente.html', umidade=umidade)
 #-------------------------------------------------------
@@ -84,6 +84,6 @@ def desligarbomba():
 #-------------------------------------------------------
 if __name__=="__main__":
 
-    app.run(debug=True, host='192.168.0.106')
+    app.run(debug=True, host='192.168.0.108')
 #-------------------------------------------------------
 

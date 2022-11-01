@@ -50,9 +50,13 @@ molhado = (canal0.value)
 
 time.sleep (2)
 print ("Valor 2 definido com sucesso","\n","\n")
+
 time.sleep (2)
 print ("SENSOR DE UMIDADE CALIBRADO COM SUCESSO","\n")
 
+time.sleep (2)
+print ("Valores",molhado,seco,"\n")
+time.sleep (4)
 #-------------------------------------------------------
   
 while True:
