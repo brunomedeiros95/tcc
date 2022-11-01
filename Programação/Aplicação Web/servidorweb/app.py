@@ -35,34 +35,10 @@ def index():
     
     return render_template('index.html')
 #-------------------------------------------------------
-@app.route('/calibrar_sensor') 
-def index():
-
-    global seco
-    seco = (canal0.value)
-
-    return render_template('calibrar_sensor.html', seco=seco)
-#-------------------------------------------------------
-@app.route('/calibrar_sensor1') 
-def index():
-
-    global molhado
-    molhado = (canal0.value)
-
-    return render_template('calibrar_sensor.html', molhado=molhado)
-#-------------------------------------------------------
-@app.route('/calibrar_sensor2') 
-def index():
-    
-    global umidade
-    umidade = (((canal0.value - seco)/(seco - molhado)) *100 *-1)
-
-    return render_template('calibrar_sensor.html', umidade=umidade, seco=seco, molhado=molhado)
-#-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
     
-#    umidade = (int(((canal0.value - 23209)/11481) *100 *-1)) 
+    umidade = (int(((canal0.value - 23209)/11481) *100 *-1)) 
    
     if (umidade <= 50) and (umidade >= 0): 
         gpio.setup(rele, 0)        
@@ -86,14 +62,14 @@ def inteligente():
 @app.route('/manual')
 def manual():
     
-#    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
+    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
        
     return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 @app.route('/manual/ligar')
 def ligarbomba():
     
-#    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
+    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
     gpio.setup(rele,0)
     
     return render_template('manual.html', umidade=umidade)
@@ -101,7 +77,7 @@ def ligarbomba():
 @app.route('/manual/parar')
 def desligarbomba():
     
-#    umidade = (int(((canal0.value - 26490)/15490) *100 *-1))
+    umidade = (int(((canal0.value - 26490)/15490) *100 *-1))
     gpio.setup(rele,1) 
     
     return render_template('manual.html', umidade=umidade)
