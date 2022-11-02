@@ -32,10 +32,28 @@ app = Flask(__name__)
 def index():
     
     gpio.setup(rele, 1)
-    
+    print(seco,molhado)
     return render_template('index.html')
+    
 #-------------------------------------------------------
+@app.route("/cabibrar")
+def calibrar():
 
+    return render_template('calibrar.html',)
+#-------------------------------------------------------
+@app.route("/cabibrar1")
+def calibrar1():
+
+    global seco
+    seco = (canal0.value)
+    return render_template('calibrar1.html', seco=seco)
+#-------------------------------------------------------
+@app.route('calibrar2')
+def calibrar2():
+
+    global molhado
+    molhado = (canal0.value)
+    return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
