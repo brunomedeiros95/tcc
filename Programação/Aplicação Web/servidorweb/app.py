@@ -32,39 +32,40 @@ app = Flask(__name__)
 def index():
     
     gpio.setup(rele, 1)
-    print(seco,molhado)
     return render_template('index.html')
     
 #-------------------------------------------------------
-@app.route("/cabibrar")
+@app.route('/calibrar')
 def calibrar():
-
-    return render_template('calibrar.html',)
+    print("Iniciar calibração")
+    return render_template('calibrar.html')
 #-------------------------------------------------------
-@app.route("/cabibrar1")
+@app.route('/calibrar1')
 def calibrar1():
 
     global seco
     seco = (canal0.value)
+    print (seco)
     return render_template('calibrar1.html', seco=seco)
 #-------------------------------------------------------
-@app.route('calibrar2')
+@app.route('/calibrar2')
 def calibrar2():
 
     global molhado
     molhado = (canal0.value)
+    print (molhado)
     return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
     
-    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
+    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
    
-    if (umidade <= 50): 
+    if (umidade <= 50) and (umidade > 0):
         gpio.setup(rele, 0)        
         print("Irrigando")
        
-    elif (umidade >= 80):
+    elif (umidade >= 80) and (umidade < 100):
         gpio.setup(rele, 1)
         print("Irrigação Desligada") 
     
@@ -104,6 +105,6 @@ def desligarbomba():
 #-------------------------------------------------------
 if __name__=="__main__":
 
-    app.run(debug=True, host='192.168.0.106')
+    app.run(debug=True, host='192.168.0.108')
 #-------------------------------------------------------
 
