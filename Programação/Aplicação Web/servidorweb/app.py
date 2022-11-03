@@ -63,16 +63,16 @@ def inteligente():
    
     if (umidade <= 50) and (umidade > 0):
         gpio.setup(rele, 0)        
-        print("Irrigando")
        
     elif (umidade >= 80) and (umidade < 100):
         gpio.setup(rele, 1)
-        print("Irrigação Desligada") 
     
     elif (umidade < 0):
+        gpio.setup(rele, 0)
         umidade = 0
     
     elif (umidade > 100):
+        gpio.setup(rele, 1)
         umidade = 100
     
     else:
