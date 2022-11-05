@@ -53,55 +53,61 @@ def calibrar1():
 @app.route('/calibrar2')
 def calibrar2():
 
-    global molhado, umidade
+    global molhado
     molhado = (canal0.value)
-    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele, 1)
     print (molhado)
-    return render_template('calibrar2.html', molhado=molhado, umidade=umidade)
+    return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
-   
-    if (umidade <= 50) and (umidade > 0):
+    
+    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
+
+    if (umidade <= 50):
+        status = ("Irrigando")
         gpio.setup(rele, 0)        
-       
-    elif (umidade >= 80) and (umidade < 100):
+        if (umidade < 0):
+            umidade= 0
+
+    
+    elif (umidade >= 80):
+        status = ("Solo irrigado")
         gpio.setup(rele, 1)
-    
-    elif (umidade < 0):
-        gpio.setup(rele, 0)
-        umidade = 0
-    
-    elif (umidade > 100):
-        gpio.setup(rele, 1)
-        umidade = 100
-    
+        if (umidade > 100):
+            umidade = 100
+
     else:
         print("Monitorando...")  
        
-    return render_template('inteligente.html', umidade=umidade)
+    return render_template('inteligente.html', umidade=umidade, status=status)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
 
+    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,1)
+
     return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 @app.route('/manual/ligar')
 def ligarbomba():
-    
+
+    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,0)
+
     return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 @app.route('/manual/parar')
 def desligarbomba():
-    
+
+    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,1) 
+
     return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 if __name__=="__main__":
 
-    app.run(debug=True, host='192.168.0.108')
+    app.run(debug=True, host='192.168.0.101')
 #-------------------------------------------------------
 

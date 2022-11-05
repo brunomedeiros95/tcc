@@ -21,7 +21,7 @@ a:hover {
 
 body {
   font-family: "Poppins", sans-serif;
-  background: lightblue url("/static/bg-desk.png") no-repeat fixed center/cover;
+  background: rgb(232, 253, 232) url("/static/bg-desk.png") no-repeat fixed center/cover;
   width: 100%;
   position: relative;
   text-align: center;
@@ -136,7 +136,7 @@ footer p {
   text-decoration: none;
 }
 .btn.btn-primary {
-  color: #222;
+  color: rgb(255, 255, 255);
   background-color: var(--primary-color);
   border-color: var(--primary-color);
 }
