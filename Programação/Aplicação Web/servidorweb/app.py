@@ -11,7 +11,7 @@ import RPi.GPIO as gpio
 import time             
 import busio
 import board
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
@@ -59,16 +59,18 @@ def calibrar2():
     print (molhado)
     return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
-@app.route('/api', methods= ["POST", "GET"])
+@app.route('/api', , methods=['GET','POST'])
 def api():
 
-    global cidade
-    cidade = request.form ['cidade']
+    if request.method == 'POST':
+        req = request.form
 
-    global estado
-    estado = request.form ["estado"]
-    
-    print("Cidade:{} Estado:{}" .format(cidade, estado))
+        cidade = req['cidade']
+        estado = req('estado')
+
+        print("Cidade:{} Estado:{}" .format(cidade, estado))
+        return redirect(request.url)
+        
     return render_template('api.html', cidade=cidade, estado=estado)
 #-------------------------------------------------------
 @app.route("/inteligente")
