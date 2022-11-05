@@ -59,19 +59,23 @@ def calibrar2():
     print (molhado)
     return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
-@app.route('/api', , methods=['GET','POST'])
+@app.route('/api', methods=['GET','POST'])
 def api():
 
     if request.method == 'POST':
         req = request.form
 
+        global cidade
         cidade = req['cidade']
+
+        global estado
         estado = req('estado')
 
-        print("Cidade:{} Estado:{}" .format(cidade, estado))
+        print("Sua cidade:{} e Estado:{}" .format(cidade, estado))
+
         return redirect(request.url)
         
-    return render_template('api.html', cidade=cidade, estado=estado)
+    return render_template('api.html')
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
@@ -95,7 +99,7 @@ def inteligente():
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
-
+    
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,1)
     status = ("Irrigação Desligada")
