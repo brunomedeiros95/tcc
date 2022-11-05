@@ -58,7 +58,7 @@ def calibrar2():
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele, 1)
     print (molhado)
-    return render_template('calibrar2.html', molhado=molhado)
+    return render_template('calibrar2.html', molhado=molhado, umidade=umidade)
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
