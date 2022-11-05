@@ -1,12 +1,24 @@
 {% extends "template.html" %} {% block content %}
 <section class="calibrar2">
   <div class="container">
-    <h1 class="mode--title">Calibrar Sensor de Umidade</h1>
+    <h1 class="mode--title">Definições para previsão de chuva</h1>
     <p class="mode--sub">
-      O sensor de umidade foi calibrado com sucesso! Avance para seguir com os ajustes dos componentes.
+      Para que o sistema possa realizar a previsão de chuva é necessário que seja informado
+      A Cidade e o Estado que se encontra a plantação.
     </p>
 
     <div class="btns--holder">
+      <form action="/api" method="get">
+
+      <label for="cidade">cidade</label><br>
+      <input type="text" placeholder = "Cidade" name="cidade">
+
+      <label for="estado">estado</label><br>
+      <input type="text" placeholder = "Estado" name="estado">
+
+      <input type="submit" value="Enviar">
+      </form>
+
       <a class="btn btn-primary" role="button" href="/api"> AVANÇAR </a>
       <a class="btn btn-primary" role="button" href="/calibrar"> VOLTAR </a>
     </div>

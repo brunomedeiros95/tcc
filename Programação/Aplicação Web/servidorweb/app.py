@@ -11,7 +11,7 @@ import RPi.GPIO as gpio
 import time             
 import busio
 import board
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
@@ -32,7 +32,7 @@ app = Flask(__name__)
 def index():
     
     gpio.setup(rele, 1)
-    return render_template('index.html')
+    return render_template('componentes.html')
     
 #-------------------------------------------------------
 @app.route('/calibrar')
@@ -59,6 +59,18 @@ def calibrar2():
     print (molhado)
     return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
+@app.route('/api', methods= ["POST", "GET"])
+def api():
+
+    global cidade
+    cidade = request.form ['cidade']
+
+    global estado
+    estado = request.form ["estado"]
+    
+    print("Cidade:{} Estado:{}" .format(cidade, estado))
+    return render_template('api.html', cidade=cidade, estado=estado)
+#-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
     
@@ -70,16 +82,12 @@ def inteligente():
         gpio.setup(rele, 0)        
         if (umidade < 0):
             umidade= 0
-
     
     elif (umidade >= 80):
         status = ("Solo Úmido")
         gpio.setup(rele, 1)
         if (umidade > 100):
             umidade = 100
-
-    else:
-        print("Monitorando...")  
        
     return render_template('inteligente.html', umidade=umidade, status=status)
 #-------------------------------------------------------
