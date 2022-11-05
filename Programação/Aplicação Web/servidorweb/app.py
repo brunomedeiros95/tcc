@@ -53,16 +53,15 @@ def calibrar1():
 @app.route('/calibrar2')
 def calibrar2():
 
-    global molhado
+    global molhado, umidade
     molhado = (canal0.value)
+    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele, 1)
     print (molhado)
     return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
-    
-    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
    
     if (umidade <= 50) and (umidade > 0):
         gpio.setup(rele, 0)        
@@ -85,25 +84,20 @@ def inteligente():
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
-    
-    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
-       
+
+    gpio.setup(rele,1)
     return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 @app.route('/manual/ligar')
 def ligarbomba():
     
-    umidade = (int(((canal0.value - 26490)/15490) *100 *-1)) 
     gpio.setup(rele,0)
-    
     return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 @app.route('/manual/parar')
 def desligarbomba():
     
-    umidade = (int(((canal0.value - 26490)/15490) *100 *-1))
     gpio.setup(rele,1) 
-    
     return render_template('manual.html', umidade=umidade)
 #-------------------------------------------------------
 if __name__=="__main__":
