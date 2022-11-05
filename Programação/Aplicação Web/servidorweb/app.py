@@ -87,8 +87,9 @@ def manual():
 
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,1)
+    status = ("Irrigação Desligada")
 
-    return render_template('manual.html', umidade=umidade)
+    return render_template('manual.html', umidade=umidade,status=status)
 #-------------------------------------------------------
 @app.route('/manual/ligar')
 def ligarbomba():
@@ -96,6 +97,11 @@ def ligarbomba():
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,0)
     status = ("Irrigando")
+    if (umidade < 0):
+        umidade = 0
+    
+    elif (umidade > 100):
+          umidade = 100
 
     return render_template('manual.html', umidade=umidade, status=status)
 #-------------------------------------------------------
@@ -105,6 +111,11 @@ def desligarbomba():
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,1) 
     status = ("Irrigação Desligada")
+    if (umidade < 0):
+        umidade = 0
+    
+    elif (umidade > 100):
+          umidade = 100
 
     return render_template('manual.html', umidade=umidade, status=status)
 #-------------------------------------------------------
