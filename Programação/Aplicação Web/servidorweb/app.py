@@ -63,16 +63,17 @@ def calibrar2():
 def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
+    status = ("Solo Úmido")
 
     if (umidade <= 50):
-        status = ("Irrigando")
+        status = ("Solo Seco")
         gpio.setup(rele, 0)        
         if (umidade < 0):
             umidade= 0
 
     
     elif (umidade >= 80):
-        status = ("Solo irrigado")
+        status = ("Solo Úmido")
         gpio.setup(rele, 1)
         if (umidade > 100):
             umidade = 100
