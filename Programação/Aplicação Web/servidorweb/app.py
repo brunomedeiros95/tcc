@@ -37,6 +37,7 @@ def index():
 #-------------------------------------------------------
 @app.route('/calibrar')
 def calibrar():
+    gpio.setup(rele, 1)
     print("Iniciar calibração")
     return render_template('calibrar.html')
 #-------------------------------------------------------
@@ -45,6 +46,7 @@ def calibrar1():
 
     global seco
     seco = (canal0.value)
+    gpio.setup(rele, 1)
     print (seco)
     return render_template('calibrar1.html', seco=seco)
 #-------------------------------------------------------
@@ -53,6 +55,7 @@ def calibrar2():
 
     global molhado
     molhado = (canal0.value)
+    gpio.setup(rele, 1)
     print (molhado)
     return render_template('calibrar2.html', molhado=molhado)
 #-------------------------------------------------------
