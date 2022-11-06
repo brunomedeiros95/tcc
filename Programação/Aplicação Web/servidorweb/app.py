@@ -77,8 +77,8 @@ def api():
         
     return render_template('api.html')
 #-------------------------------------------------------
-@app.route("/home")
-def home():
+@app.route("/index")
+def index():
     return render_template ('index.html')
 #-------------------------------------------------------
 @app.route("/inteligente")
