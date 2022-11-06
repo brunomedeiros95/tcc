@@ -69,9 +69,9 @@ def api():
         cidade = req['cidade']
 
         global estado
-        estado = req('estado')
+        estado = req['estado']
 
-        print("Sua cidade:{} e Estado:{}" .format(cidade, estado))
+        print("Cidade: {} / Estado: {}" .format(cidade, estado))
 
         return redirect(request.url)
         
@@ -82,7 +82,7 @@ def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     status = ("Solo Úmido")
-
+    print(" FOI!! Cidade: {} / Estado: {}" .format(cidade, estado))
     if (umidade <= 50):
         status = ("Solo Seco")
         gpio.setup(rele, 0)        
@@ -136,6 +136,6 @@ def desligarbomba():
 #-------------------------------------------------------
 if __name__=="__main__":
 
-    app.run(debug=True, host='192.168.0.101')
+    app.run(debug=True, host='192.168.0.103')
 #-------------------------------------------------------
 
