@@ -77,12 +77,13 @@ def api():
         
     return render_template('api.html')
 #-------------------------------------------------------
+
+#-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     status = ("Solo Úmido")
-    print(" FOI!! Cidade: {} / Estado: {}" .format(cidade, estado))
     if (umidade <= 50):
         status = ("Solo Seco")
         gpio.setup(rele, 0)        
