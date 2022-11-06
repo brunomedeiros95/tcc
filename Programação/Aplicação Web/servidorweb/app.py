@@ -29,7 +29,7 @@ gpio.setwarnings(False)
 app = Flask(__name__)
 #-------------------------------------------------------
 @app.route('/') 
-def index():
+def componentes():
     
     gpio.setup(rele, 1)
     return render_template('componentes.html')
@@ -77,7 +77,9 @@ def api():
         
     return render_template('api.html')
 #-------------------------------------------------------
-
+@app.route("/home")
+def home():
+    return render_template ('index.html')
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
