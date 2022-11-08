@@ -63,8 +63,8 @@ def calibrar2():
 @app.route('/api', methods=['GET','POST'])
 def api():
 
-    if requests.method == 'POST':
-        req = requests.form
+    if request.method == 'POST':
+        req = request.form
 
         global cidade
         cidade = req['cidade']
@@ -74,7 +74,7 @@ def api():
 
         print("Cidade: {} / Estado: {}" .format(cidade, estado))
 
-        return redirect(requests.url)
+        return redirect(request.url)
         
     return render_template('api.html')
 #-------------------------------------------------------
@@ -87,8 +87,8 @@ def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
 
-    requestid = requests.get("https://apiadvisor.climatempo.com.br/api/v1/locale/city?name={}&state={}&country=BR&token=5a73402f3418fd8495970fecf8c38cdd".format (cidade, estado))
-    print (requestid.json())
+    r = requests.get("https://apiadvisor.climatempo.com.br/api/v1/locale/city?name={}&state={}&country=BR&token=5a73402f3418fd8495970fecf8c38cdd".format (cidade, estado))
+    print (r.json())
 
     status = ("Solo Úmido")
     if (umidade <= 50):
