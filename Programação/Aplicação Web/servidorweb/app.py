@@ -11,6 +11,7 @@ import RPi.GPIO as gpio
 import time             
 import busio
 import board
+import requests
 from flask import Flask, render_template, request, redirect
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
@@ -85,6 +86,10 @@ def index():
 def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
+
+    request = request.get("https://apiadvisor.climatempo.com.br/api/v1/locale/city?name={}&state={}&country=BR&token=5a73402f3418fd8495970fecf8c38cdd".format (cidade, estado))
+    print (request.json())
+    
     status = ("Solo Úmido")
     if (umidade <= 50):
         status = ("Solo Seco")
