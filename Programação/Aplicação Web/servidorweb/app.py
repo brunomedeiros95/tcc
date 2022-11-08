@@ -11,8 +11,8 @@ import RPi.GPIO as gpio
 import time             
 import busio
 import board
-import requests
-from flask import Flask, render_template, redirect
+import requests 
+from flask import Flask, render_template, redirect, request
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
@@ -144,6 +144,6 @@ def desligarbomba():
 #-------------------------------------------------------
 if __name__=="__main__":
 
-    app.run(debug=True, host='192.168.0.103')
+    app.run(debug=True, host='192.168.0.101')
 #-------------------------------------------------------
 
