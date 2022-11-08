@@ -12,7 +12,7 @@ import time
 import busio
 import board
 import requests
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, redirect
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
@@ -63,8 +63,8 @@ def calibrar2():
 @app.route('/api', methods=['GET','POST'])
 def api():
 
-    if request.method == 'POST':
-        req = request.form
+    if requests.method == 'POST':
+        req = requests.form
 
         global cidade
         cidade = req['cidade']
@@ -74,7 +74,7 @@ def api():
 
         print("Cidade: {} / Estado: {}" .format(cidade, estado))
 
-        return redirect(request.url)
+        return redirect(requests.url)
         
     return render_template('api.html')
 #-------------------------------------------------------
@@ -87,9 +87,9 @@ def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
 
-    request = request.get("https://apiadvisor.climatempo.com.br/api/v1/locale/city?name={}&state={}&country=BR&token=5a73402f3418fd8495970fecf8c38cdd".format (cidade, estado))
-    print (request.json())
-    
+    requestid = requests.get("https://apiadvisor.climatempo.com.br/api/v1/locale/city?name={}&state={}&country=BR&token=5a73402f3418fd8495970fecf8c38cdd".format (cidade, estado))
+    print (requestid.json())
+
     status = ("Solo Úmido")
     if (umidade <= 50):
         status = ("Solo Seco")
