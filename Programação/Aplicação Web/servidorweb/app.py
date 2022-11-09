@@ -98,11 +98,11 @@ def rq():
     if chuva in descricao:
         global chovendo
         chovendo = True
+        ("Chovendo!!!!")
     else:
         chovendo = False
 
-    redirect("/inteligente")
-    return render_template('inteligente.html')
+    return redirect("/inteligente")
 
 #-------------------------------------------------------
 @app.route("/inteligente")
@@ -110,6 +110,7 @@ def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     status = ("Verificando")
+    stchuva = ("Previsão de Chuva em {cidade} não irrigar")
     
     if chovendo == False:
         if (umidade <= 50):
@@ -124,9 +125,10 @@ def inteligente():
             if (umidade > 100):
                 umidade = 100
     else:
-        stchuva = ("Previsão de Chuva em {cidade} não irrigar")
+        print (stchuva)
+        gpio.setup(rele, 1)
 
-    return render_template('inteligente.html', umidade=umidade, status=status, stchuva, chovendo, cidade)
+    return render_template('inteligente.html', umidade=umidade, status=status, chovendo=chovendo, cidade=cidade)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
