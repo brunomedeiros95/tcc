@@ -78,34 +78,6 @@ def api():
         
     return render_template('api.html')
 #-------------------------------------------------------
-@app.route("/agua")
-def agua():
-
-    return render_template ('agua.html')
-#-------------------------------------------------------
-@app.route("/agua1")
-def agua1():
-
-    global tempo_inicial
-    tempo_inicial = (time.time()) 
-    gpio.setup(rele, 0)
-
-    return render_template ('agua1.html')
-#-------------------------------------------------------
-@app.route("/agua2")
-def agua2():
-
-    tempo_final = (time.time())
-    gpio.setup(rele, 1)
-
-    tempo_total = (tempo_final - tempo_inicial)
-    print (tempo_total, "segundos")
-
-    global ml_segundo
-    ml_segundo = (50 / tempo_total)
-    
-    return render_template ('agua2.html')
-#-------------------------------------------------------
 @app.route("/index")
 def index():
     return render_template ('index.html')
@@ -156,7 +128,7 @@ def inteligente():
         gpio.setup(rele, 1)
         return redirect("/rq")
 
-    return render_template('inteligente.html', umidade=umidade, status=status, chovendo=chovendo, cidade=cidade)
+    return render_template('inteligente.html', umidade=umidade, status=status, chovendo=chovendo, cidade=cidade, stchuva=stchuva)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
