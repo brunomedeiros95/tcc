@@ -156,7 +156,7 @@ def inteligente():
         gpio.setup(rele, 1)
         return redirect("/rq")
 
-    return render_template('inteligente.html', umidade=umidade, status=status, chovendo=chovendo, cidade=cidade, stchuva=stchuva)
+    return render_template('inteligente.html', umidade=umidade, status=status, chovendo=chovendo, cidade=cidade)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
@@ -197,6 +197,6 @@ def desligarbomba():
 #-------------------------------------------------------
 if __name__=="__main__":
 
-    app.run(debug=True, host='192.168.0.105')
+    app.run(debug=True, host='192.168.0.101')
 #-------------------------------------------------------
 
