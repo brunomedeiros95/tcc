@@ -17,8 +17,11 @@ import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
 
+token = ("ecceaa6b7d3bbf475f371f4b4dc64d03")
+
 rele = 16
 gpio.setup(rele, gpio.OUT, initial= 1)
+
 
 #Inicializa interface I2C / Configura ADS1115
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -82,28 +85,48 @@ def api():
 def index():
     return render_template ('index.html')
 #-------------------------------------------------------
+@app.route("/rq")
+def rq():
+
+    link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
+    requisicao = requests.get(link)
+    requisicao_dic = requisicao.json()
+    descricao = requisicao_dic['weather'][0]['description']
+    print(descricao)
+    
+    chuva = "chuva"
+    if chuva in descricao:
+        global chovendo
+        chovendo = True
+    else:
+        chovendo = False
+
+    redirect("/inteligente")
+    return render_template('inteligente.html')
+
+#-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
-
-    r = requests.get("https://apiadvisor.climatempo.com.br/api/v1/locale/city?name={}&state={}&country=BR&token=5a73402f3418fd8495970fecf8c38cdd".format (cidade, estado))
-    print (r.json())
-
-    status = ("Solo Úmido")
-    if (umidade <= 50):
-        status = ("Solo Seco")
-        gpio.setup(rele, 0)        
-        if (umidade < 0):
-            umidade= 0
+    status = ("Verificando")
     
-    elif (umidade >= 80):
-        status = ("Solo Úmido")
-        gpio.setup(rele, 1)
-        if (umidade > 100):
-            umidade = 100
-       
-    return render_template('inteligente.html', umidade=umidade, status=status)
+    if chovendo == False:
+        if (umidade <= 50):
+            status = ("Solo Seco")
+            gpio.setup(rele, 0)        
+            if (umidade < 0):
+                umidade= 0
+        
+        elif (umidade >= 80):
+            status = ("Solo Úmido")
+            gpio.setup(rele, 1)
+            if (umidade > 100):
+                umidade = 100
+    else:
+        stchuva = ("Previsão de Chuva em {cidade} não irrigar")
+
+    return render_template('inteligente.html', umidade=umidade, status=status, stchuva, chovendo, cidade)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():

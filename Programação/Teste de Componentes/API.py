@@ -1,8 +1,19 @@
 import requests
 
-cidade = input("Informe sua cidade: ")
-estado = input ("Informe seu estado: ")
+token = ("ecceaa6b7d3bbf475f371f4b4dc64d03")
+cidade = ("carvão")
 
-r = requests.get('https://apiadvisor.climatempo.com.br/api/v1/locale/city?name={}&state={}&country=BR&token=5a73402f3418fd8495970fecf8c38cdd'.format (cidade, estado))
+link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
 
-print(r.json())
+requisicao = requests.get(link)
+requisicao_dic = requisicao.json()
+
+descricao = requisicao_dic['weather'][0]['description']
+print(descricao)
+
+chuva = "chuva"
+
+if chuva not in descricao:
+    print("Ta tranquilo rapaziada!")
+else:
+    print("Ta chovendo rapaziada!")
