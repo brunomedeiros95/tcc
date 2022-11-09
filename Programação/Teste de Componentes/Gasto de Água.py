@@ -10,16 +10,16 @@ gpio.setwarnings(False)
 #CALIBRAÇÃO (INÍCIO)
 
 print ("Calibração da Quantidade de Água Irrigada")
+gpio.setup(rele, 1)
 print ("Encha o copo de medição até a marcação de 100ml")
 
-input("Coloque o copo na entrada da bomba de irrigação, digite ok quando estiver pronto: ")
+input("Coloque o copo na entrada da bomba de irrigação, pressione ENTER quando estiver pronto")
 
-input(
-    "Ao digitar iniciar a bomba de irrigação será ligada, quando esgotar a água do copo digite ok para parar: ")
+input("Ao digitar iniciar a bomba de irrigação será ligada, quando esgotar a água do copo pressione ENTER para parar ")
 tempo_inicial = (time.time()) # em segundos
 gpio.setup(rele, 0)
 
-input("Digite ok se a água do copo foi esgotada: ")
+input("Pressione ENTER se a água do copo foi esgotada: ")
 tempo_final = (time.time()) # em segundos
 gpio.setup(rele, 1)
 
@@ -28,7 +28,8 @@ tempo_total = (tempo_final - tempo_inicial)
 
 print (tempo_total, "segundos")
 
-litros = (100 / tempo_total)
+
+ml_segundo = (100 / tempo_total)
 
 #CALIBRAÇÃO (FIM)
 
@@ -44,6 +45,6 @@ gpio.setup(rele, 1)
 
 tempo_total = (tempo_final - tempo_inicial)
 
-total_agua = (litros * tempo_total)
+gasto_litros = ((ml_segundo * tempo_total)/1000)
 
-print ("O total gasto com água foi de {:.2f} litros".format (total_agua))
+print ("O total gasto com água foi de {:.2f} litros".format (gasto_litros))
