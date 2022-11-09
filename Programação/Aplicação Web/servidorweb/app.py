@@ -72,10 +72,7 @@ def api():
         global cidade
         cidade = req['cidade']
 
-        global estado
-        estado = req['estado']
-
-        print("Cidade: {} / Estado: {}" .format(cidade, estado))
+        print("Cidade: {}" .format(cidade))
 
         return redirect(request.url)
         
@@ -98,11 +95,11 @@ def rq():
     if chuva in descricao:
         global chovendo
         chovendo = True
-        ("Chovendo!!!!")
     else:
         chovendo = False
 
     return redirect("/inteligente")
+    
 
 #-------------------------------------------------------
 @app.route("/inteligente")
@@ -110,9 +107,11 @@ def inteligente():
     
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     status = ("Verificando")
-    stchuva = ("Previsão de Chuva em {cidade} não irrigar")
+    stchuva = ("Previsão de Chuva em {}, não irrigar".format(cidade))
     
     if chovendo == False:
+        stchuva = ("Sem chuva")
+
         if (umidade <= 50):
             status = ("Solo Seco")
             gpio.setup(rele, 0)        
@@ -124,9 +123,12 @@ def inteligente():
             gpio.setup(rele, 1)
             if (umidade > 100):
                 umidade = 100
+            
     else:
         print (stchuva)
+        stchuva = ("Vai chover")
         gpio.setup(rele, 1)
+        return redirect("/rq")
 
     return render_template('inteligente.html', umidade=umidade, status=status, chovendo=chovendo, cidade=cidade)
 #-------------------------------------------------------
