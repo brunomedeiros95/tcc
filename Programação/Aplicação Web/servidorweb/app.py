@@ -7,8 +7,7 @@
 #           Rodrigo Sanches de Oliveira
 #-------------------------------------------------------
 
-import RPi.GPIO as gpio
-import time             
+import RPi.GPIO as gpio       
 import busio
 import board
 import requests 
@@ -16,33 +15,33 @@ from flask import Flask, render_template, redirect, request
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
 
-
-token = ("ecceaa6b7d3bbf475f371f4b4dc64d03")
-
-rele = 16
-gpio.setup(rele, gpio.OUT, initial= 1)
-
-
 #Inicializa interface I2C / Configura ADS1115
 i2c = busio.I2C(board.SCL, board.SDA)
 ads = ADS.ADS1115(i2c)
 canal0 = AnalogIn(ads, ADS.P0)
 
+token = ("ecceaa6b7d3bbf475f371f4b4dc64d03")
+
+rele = 16
+gpio.setup(rele, gpio.OUT, initial= 1)
 gpio.setwarnings(False)
 
 app = Flask(__name__)
 #-------------------------------------------------------
 @app.route('/') 
 def componentes():
-    
+
     gpio.setup(rele, 1)
+
     return render_template('componentes.html')
     
 #-------------------------------------------------------
 @app.route('/calibrar')
 def calibrar():
+
     gpio.setup(rele, 1)
     print("Iniciar calibração")
+
     return render_template('calibrar.html')
 #-------------------------------------------------------
 @app.route('/calibrar1')
@@ -52,7 +51,8 @@ def calibrar1():
     seco = (canal0.value)
     gpio.setup(rele, 1)
     print (seco)
-    return render_template('calibrar1.html', seco=seco)
+
+    return render_template('calibrar1.html')
 #-------------------------------------------------------
 @app.route('/calibrar2')
 def calibrar2():
@@ -61,7 +61,8 @@ def calibrar2():
     molhado = (canal0.value)
     gpio.setup(rele, 1)
     print (molhado)
-    return render_template('calibrar2.html', molhado=molhado)
+
+    return render_template('calibrar2.html')
 #-------------------------------------------------------
 @app.route('/api', methods=['GET','POST'])
 def api():
@@ -80,6 +81,7 @@ def api():
 #-------------------------------------------------------
 @app.route("/index")
 def index():
+    
     return render_template ('index.html')
 #-------------------------------------------------------
 @app.route("/rq")
@@ -128,7 +130,7 @@ def inteligente():
         gpio.setup(rele, 1)
         return redirect("/rq")
 
-    return render_template('inteligente.html', umidade=umidade, status=status, chovendo=chovendo, cidade=cidade, stchuva=stchuva)
+    return render_template('inteligente.html', umidade=umidade, status=status, stchuva=stchuva)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
@@ -143,8 +145,10 @@ def manual():
 def ligarbomba():
 
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
-    gpio.setup(rele,0)
+
     status = ("Irrigando")
+    gpio.setup(rele,0)
+
     if (umidade < 0):
         umidade = 0
     
@@ -157,8 +161,10 @@ def ligarbomba():
 def desligarbomba():
 
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
-    gpio.setup(rele,1) 
+    
     status = ("Irrigação Desligada")
+    gpio.setup(rele,1) 
+    
     if (umidade < 0):
         umidade = 0
     
