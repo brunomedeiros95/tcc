@@ -11,6 +11,7 @@ import RPi.GPIO as gpio
 import busio
 import board
 import requests 
+import time
 from flask import Flask, render_template, redirect, request
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
@@ -126,9 +127,9 @@ def inteligente():
 
     else:
         print (stchuva)
-        stchuva = ("Vai chover")
+        stchuva = ("Chuva")
         gpio.setup(rele, 1)
-        return redirect("/rq")
+        time.sleep(10)
 
     return render_template('inteligente.html', umidade=umidade, status=status, stchuva=stchuva)
 #-------------------------------------------------------
