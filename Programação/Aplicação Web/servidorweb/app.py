@@ -14,6 +14,8 @@ import requests
 from flask import Flask, render_template, redirect, request
 import adafruit_ads1x15.ads1115 as ADS
 from adafruit_ads1x15.analog_in import AnalogIn
+from datetime import datetime, timedelta
+import time
 
 #Inicializa interface I2C / Configura ADS1115
 i2c = busio.I2C(board.SCL, board.SDA)
@@ -94,8 +96,8 @@ def rq():
     print(descricao)
     
     chuva = "chuva"
-    if chuva in descricao:
-        global chovendo
+    global chovendo
+    if chuva in descricao: 
         chovendo = True
     else:
         chovendo = False
@@ -128,9 +130,24 @@ def inteligente():
         print (stchuva)
         stchuva = ("Vai chover")
         gpio.setup(rele, 1)
-        return redirect("/rq")
+        return redirect("/inteligente1")
 
     return render_template('inteligente.html', umidade=umidade, status=status, stchuva=stchuva)
+#-------------------------------------------------------
+@app.route('/inteligente1')
+def inteligente1():
+
+    dia= datetime.now()
+    espera = timedelta (hours= + 6)
+    total = (espera + dia)
+    proxima_verificacao = total.strftime('%d/%m/%Y %H:%M')
+    print (proxima_verificacao)
+    time.sleep(10)
+
+    if chovendo == False:
+        return redirect("/rq")
+        
+    return render_template('inteligente1.html', proxima_verificacao=proxima_verificacao, umidade=umidade, stchuva=stchuva)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
