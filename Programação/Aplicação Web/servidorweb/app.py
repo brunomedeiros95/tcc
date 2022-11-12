@@ -96,6 +96,7 @@ def rq():
     descricao = requisicao_dic['weather'][0]['description']
     print(descricao)
     
+    global chuva
     chuva = "chuva"
     global chovendo
     if chuva in descricao: 
@@ -107,7 +108,7 @@ def rq():
 #-------------------------------------------------------
 @app.route("/inteligente")
 def inteligente():
-    
+    global umidade 
     umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     status = ("Verificando")
     stchuva = ("Previsão de Chuva em {}, não irrigar".format(cidade))
@@ -126,53 +127,35 @@ def inteligente():
             gpio.setup(rele, 1)
             if (umidade > 100):
                 umidade = 100
+            return redirect('/verificacao')
+
 
     else:
         print (stchuva)
         stchuva = ("Chuva")
         gpio.setup(rele, 1)
-        return redirect("/inteligente1")
+        return redirect('/verificacao')
 
     return render_template('inteligente.html', umidade=umidade, status=status, stchuva=stchuva)
 #-------------------------------------------------------
-@app.route('/inteligente1')
-def inteligente1():
-
+@app.route('/verificacao')
+def iverificacao():
+    
     dia= datetime.now()
     espera = timedelta (hours= + 6)
     total = (espera + dia)
     proxima_verificacao = total.strftime('%d/%m/%Y %H:%M')
     print (proxima_verificacao)
-    time.sleep(10)
-
-    if chovendo == False:
-        return redirect("/rq")
         
-    return render_template('inteligente1.html', proxima_verificacao=proxima_verificacao, umidade=umidade, stchuva=stchuva)
-#-------------------------------------------------------
-@app.route('/inteligente1')
-def inteligente1():
-
-    dia= datetime.now()
-    espera = timedelta (hours= + 6)
-    total = (espera + dia)
-    proxima_verificacao = total.strftime('%d/%m/%Y %H:%M')
-    print (proxima_verificacao)
-    time.sleep(10)
-
-    if chovendo == False:
-        return redirect("/rq")
-        
-    return render_template('inteligente1.html', proxima_verificacao=proxima_verificacao, umidade=umidade, stchuva=stchuva)
+    return render_template('verificacao.html', proxima_verificacao=proxima_verificacao, umidade=umidade)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
     
-    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     gpio.setup(rele,1)
     status = ("Irrigação Desligada")
 
-    return render_template('manual.html', umidade=umidade,status=status)
+    return render_template('manual.html')
 #-------------------------------------------------------
 @app.route('/manual/ligar')
 def ligarbomba():

@@ -13,7 +13,7 @@
       <p><span class="status">"{{proxima_verificacao}}"</span></p>
 
       <p>Previsão de chuva:</p>
-      <p><span class="status">"{{stchuva}}"</span></p>
+      <p><span class="status">Chuva</span></p>
 
       <div
         class="progress--bar chart"
@@ -24,5 +24,10 @@
 
     <a class="btn btn-primary" role="button" href="/index"> Voltar </a>
   </div>
+  <script>
+    setTimeout(function(){
+       window.location.href = 'http://192.168.0.105:5000/rq';
+    }, 5000);
+ </script>
 </section>
 {% endblock %}
