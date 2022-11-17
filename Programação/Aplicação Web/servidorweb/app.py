@@ -96,8 +96,11 @@ def rq():
     descricao = requisicao_dic['weather'][0]['description']
     print(descricao)
     
+    gpio.setup(rele,1)
+
     global chuva
     chuva = "chuva"
+
     global chovendo
     if chuva in descricao: 
         chovendo = True
@@ -128,8 +131,6 @@ def inteligente():
             if (umidade > 100):
                 umidade = 100
             return redirect('/verificacao')
-
-
     else:
         print (stchuva)
         stchuva = ("Chuva")
@@ -141,6 +142,7 @@ def inteligente():
 @app.route('/verificacao')
 def iverificacao():
     
+    gpio.setup(rele,1)
     dia= datetime.now()
     espera = timedelta (hours= + 6)
     total = (espera + dia)
@@ -160,8 +162,6 @@ def manual():
 @app.route('/manual/ligar')
 def ligarbomba():
 
-    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
-
     status = ("Irrigando")
     gpio.setup(rele,0)
 
@@ -175,8 +175,6 @@ def ligarbomba():
 #-------------------------------------------------------
 @app.route('/manual/parar')
 def desligarbomba():
-
-    umidade = (int(((canal0.value - seco)/(seco - molhado)) *100 *-1))
     
     status = ("Irrigação Desligada")
     gpio.setup(rele,1) 
