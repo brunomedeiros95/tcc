@@ -151,6 +151,11 @@ h1.mode--title {
 p.mode--sub {
   font: normal normal 500 1.25rem Poppins;
 }
+
+p.mode--cidade {
+  font: normal normal 200 1rem Poppins;
+  color: #69b769;
+}
 .status--holder {
   display: grid;
   grid-template-areas: "text1 percentage" "text2 percentage";

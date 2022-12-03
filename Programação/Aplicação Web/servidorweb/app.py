@@ -86,7 +86,7 @@ def api():
         requisicao_dic = requisicao.json()
         descricao = requisicao_dic['weather'][0]['description']
         print(descricao)
-        return redirect ("/") #/ALTERAR PARA CIDADE CADASTRADA
+        return render_template ("/cidadeok.html")
     except:
         print('cidade não encontrada.')
          
