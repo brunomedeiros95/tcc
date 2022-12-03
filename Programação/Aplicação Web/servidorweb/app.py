@@ -86,12 +86,12 @@ def api():
         requisicao_dic = requisicao.json()
         descricao = requisicao_dic['weather'][0]['description']
         print(descricao)
-        return render_template ("/cidadeok.html")
+        return render_template ("cidadeok.html")
     except:
         print('cidade não encontrada.')
         erro = True
         if erro == True:
-            return render_template ('/cidade_nao_encontrada')
+            return render_template ('/cidadenok.html')
 
     return render_template('api.html')
 #-------------------------------------------------------
