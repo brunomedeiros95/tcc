@@ -93,6 +93,13 @@ def api():
         
     return render_template('api.html')
 #-------------------------------------------------------
+@app.route("/cidadeok")
+def cidadeok():
+    
+    gpio.setup(rele,1) 
+
+    return render_template ('cidadeok.html')
+#-------------------------------------------------------
 @app.route("/index")
 def index():
     

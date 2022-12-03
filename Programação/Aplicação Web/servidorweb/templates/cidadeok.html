@@ -1,0 +1,30 @@
+{% extends "template.html" %} {% block content %}
+<section class="calibrar2">
+  <div class="container">
+    <h1 class="mode--title">Previsão de Chuva</h1>
+    <p class="mode--sub">
+      Para que o sistema possa realizar a previsão de chuva é necessário que seja informado
+      a Cidade em que se encontra a plantação.
+    </p>
+
+    <div class="btns--holder">
+      <form method="POST">
+
+      <label for="cidade">cidade</label>
+      <input type="text" placeholder = " Ex: Carapicuíba" name="cidade"><br><br>
+      <p class="mode--cidade">
+        Cidade cadastrada com sucesso!
+      </p>
+
+      <input type="submit" value="Enviar">
+      </form>
+      
+      <a class="btn btn-primary" role="button" href="/index"> AVANÇAR </a>
+      <a class="btn btn-primary" role="button" href="/calibrar"> VOLTAR </a>
+    </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}
