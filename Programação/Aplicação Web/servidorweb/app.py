@@ -90,9 +90,8 @@ def api():
         print(descricao)
         return render_template ("cidadeok.html", cidade=cidade)
     except:
-        cderro = (cidade, "Não é Valido")
         print('cidade não encontrada.')
-        return render_template('api.html', cderro=cderro)
+        return render_template('api.html', cidade=cidade)
         
 #-------------------------------------------------------
 @app.route("/cidadeok")
