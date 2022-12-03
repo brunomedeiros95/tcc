@@ -78,16 +78,18 @@ def api():
 
         print("Cidade: {}" .format(cidade))
 
-        try:
-            link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
-            requisicao = requests.get(link)
-            requisicao_dic = requisicao.json()
-            descricao = requisicao_dic['weather'][0]['description']
-            print(descricao)
-        except:
-            print('cidade não encontrada.')
-
         return redirect(request.url)
+
+    try:
+        link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
+        requisicao = requests.get(link)
+        requisicao_dic = requisicao.json()
+        descricao = requisicao_dic['weather'][0]['description']
+        print(descricao)
+        return redirect ("/") #/ALTERAR PARA CIDADE CADASTRADA
+    except:
+        print('cidade não encontrada.')
+         
         
     return render_template('api.html')
 #-------------------------------------------------------
