@@ -69,13 +69,11 @@ def calibrar2():
 #-------------------------------------------------------
 @app.route('/api', methods=['GET','POST'])
 def api():
-    
-    global cidade
-    cidade = " "
 
     if request.method == 'POST':
         req = request.form
-
+       
+        global cidade
         cidade = req['cidade']
 
         print("Cidade: {}" .format(cidade))
@@ -88,10 +86,10 @@ def api():
         requisicao_dic = requisicao.json()
         descricao = requisicao_dic['weather'][0]['description']
         print(descricao)
-        return render_template ("cidadeok.html", cidade=cidade)
+        return render_template ("cidadeok.html")
     except:
         print('cidade não encontrada.')
-        return render_template('api.html', cidade=cidade)
+        return render_template('api.html')
         
 #-------------------------------------------------------
 @app.route("/cidadeok")
