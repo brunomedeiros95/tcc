@@ -1,7 +1,0 @@
-
-Bibliotecas:
-
-import RPi.GPIO as gpio (Para manipulação dos pinos de entrada e saída do RPI.)
-
-import time (Armazena a hora do dia na forma de horas, minutos, segundos e microsegundos)
-
