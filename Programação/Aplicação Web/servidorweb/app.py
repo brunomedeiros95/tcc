@@ -92,7 +92,7 @@ def api():
         print('cidade não encontrada.')
         erro = True
         if erro == True:
-            return render_template ('/cidade_nao_encontrada')
+            return redirect ('/cidade_nao_encontrada')
 
     return render_template('api.html', cidade=cidade)
 #-------------------------------------------------------
