@@ -79,6 +79,7 @@ def api():
         print("Cidade: {}" .format(cidade))
 
         return redirect(request.url)
+    
 
     try:
         link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
@@ -91,9 +92,9 @@ def api():
         print('cidade não encontrada.')
         erro = True
         if erro == True:
-            return render_template ('/cidadenok.html')
+            return render_template ('/cidade_nao_encontrada')
 
-    return render_template('api.html')
+    return render_template('api.html', cidade=cidade)
 #-------------------------------------------------------
 @app.route("/cidadeok")
 def cidadeok():
