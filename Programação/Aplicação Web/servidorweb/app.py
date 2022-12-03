@@ -89,8 +89,10 @@ def api():
         return render_template ("/cidadeok.html")
     except:
         print('cidade não encontrada.')
-         
-        
+        erro = True
+        if erro == True:
+            return render_template ('/cidade_nao_encontrada')
+
     return render_template('api.html')
 #-------------------------------------------------------
 @app.route("/cidadeok")
@@ -99,6 +101,13 @@ def cidadeok():
     gpio.setup(rele,1) 
 
     return render_template ('cidadeok.html')
+#-------------------------------------------------------
+@app.route("/cidade_nao_encontrada")
+def cidadenok():
+    
+    gpio.setup(rele,1) 
+
+    return render_template ('cidadenok.html')
 #-------------------------------------------------------
 @app.route("/index")
 def index():
