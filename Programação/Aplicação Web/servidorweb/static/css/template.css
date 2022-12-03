@@ -153,8 +153,9 @@ p.mode--sub {
 }
 
 p.mode--cidade {
-  font: normal normal 200 1rem Poppins;
-  color: #69b769;
+  color: #68b868;
+  font: normal normal 100 0.8rem Poppins;
+  
 }
 .status--holder {
   display: grid;
