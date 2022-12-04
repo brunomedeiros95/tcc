@@ -159,7 +159,7 @@ def inteligente():
             gpio.setup(rele, 1)
             if (umidade > 100):
                 umidade = 100
-            return redirect('/verificacao')
+            return redirect('/verificacaoirri')
     else:
         print (stchuva)
         stchuva = ("Chuva")
@@ -179,6 +179,18 @@ def iverificacao():
     print (proxima_verificacao)
         
     return render_template('verificacao.html', proxima_verificacao=proxima_verificacao, umidade=umidade)
+#-------------------------------------------------------
+@app.route('/verificacaoirri')
+def verificacaoirri():
+    
+    gpio.setup(rele,1)
+    dia= datetime.now()
+    espera = timedelta (hours= + 6)
+    total = (espera + dia)
+    proxima_verificacao = total.strftime('%d/%m/%Y %H:%M')
+    print (proxima_verificacao)
+        
+    return render_template('verificacaoirri.html', proxima_verificacao=proxima_verificacao, umidade=umidade)
 #-------------------------------------------------------
 @app.route('/manual')
 def manual():
