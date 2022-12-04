@@ -91,17 +91,26 @@ def api():
     return render_template('api.html')
           
 #-------------------------------------------------------
-@app.route("/cidadeok")
+@app.route('/cidadeok')
 def cidadeok():
     
     gpio.setup(rele,1) 
 
     return render_template ('cidadeok.html')
 #-------------------------------------------------------
-@app.route("/cidadever")
+@app.route('/cidadever', methods=['GET','POST'])
 def cidadevr():
     
     gpio.setup(rele,1)
+    
+    if request.method == 'POST':
+        req = request.form
+       
+        global cidade
+        cidade = req['cidade']
+
+        print("Cidade: {}" .format(cidade))
+        return redirect(request.url)
 
     try:
         link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
