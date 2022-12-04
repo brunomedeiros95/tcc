@@ -77,6 +77,7 @@ def api():
         cidade = req['cidade']
 
         print("Cidade: {}" .format(cidade))
+        erro = ""
 
         return redirect(request.url)
     
@@ -89,8 +90,10 @@ def api():
         return render_template ("cidadeok.html")
     except:
         print('cidade não encontrada.')
-        return render_template('api.html')
-        
+        erro = "Cidade não encontrada, tente novamente"
+    
+    return render_template('api.html', erro=erro)
+          
 #-------------------------------------------------------
 @app.route("/cidadeok")
 def cidadeok():
