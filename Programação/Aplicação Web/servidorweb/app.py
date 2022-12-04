@@ -77,10 +77,7 @@ def api():
         cidade = req['cidade']
 
         print("Cidade: {}" .format(cidade))
-        erro = ""
-
         return redirect(request.url)
-    
     try:
         link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
         requisicao = requests.get(link)
@@ -90,9 +87,8 @@ def api():
         return render_template ("cidadeok.html")
     except:
         print('cidade não encontrada.')
-        erro = "Informe uma cidade válida!"
     
-    return render_template('api.html', erro=erro)
+    return render_template('api.html')
           
 #-------------------------------------------------------
 @app.route("/cidadeok")
@@ -102,12 +98,21 @@ def cidadeok():
 
     return render_template ('cidadeok.html')
 #-------------------------------------------------------
-@app.route("/cidade_nao_encontrada")
-def cidadenok():
+@app.route("/cidadever")
+def cidadevr():
     
-    gpio.setup(rele,1) 
+    gpio.setup(rele,1)
 
-    return render_template ('cidadenok.html')
+    try:
+        link = ("https://api.openweathermap.org/data/2.5/weather?q={}&appid={}&lang=pt_br").format(cidade,token)
+        requisicao = requests.get(link)
+        requisicao_dic = requisicao.json()
+        descricao = requisicao_dic['weather'][0]['description']
+        print(descricao)
+        return redirect ("/index")
+    except:
+        print('cidade não encontrada.')  
+        return render_template ('cidadever.html')
 #-------------------------------------------------------
 @app.route("/index")
 def index():
