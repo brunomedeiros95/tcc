@@ -90,7 +90,7 @@ def api():
         return render_template ("cidadeok.html")
     except:
         print('cidade não encontrada.')
-        erro = "Cidade não encontrada, tente novamente"
+        erro = "Informe uma cidade válida!"
     
     return render_template('api.html', erro=erro)
           
