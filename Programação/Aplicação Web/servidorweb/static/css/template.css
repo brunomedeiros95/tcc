@@ -22,7 +22,6 @@ a:hover {
 body {
   font-family: "Poppins", sans-serif;
   background: rgb(232, 253, 232) url("/static/bg-desk.png") no-repeat fixed center/cover;
-  opacity: 0.5;
   width: 100%;
   position: relative;
   text-align: center;
@@ -155,6 +154,23 @@ p.mode--sub {
 
 p.mode--cidade {
   color: #68b868;
+  font: normal normal 100 0.8rem Poppins;
+}
+
+p.mode--cidade-valida {
+  color: #000000;
+  font: normal normal 100 0.8rem Poppins;
+  
+}
+
+p.mode--cidade-ok {
+  color: #68b868;
+  font: normal normal 100 0.8rem Poppins;
+  
+}
+
+p.mode--cidade-n {
+  color: #8b0f0f;
   font: normal normal 100 0.8rem Poppins;
   
 }
